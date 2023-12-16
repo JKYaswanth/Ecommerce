@@ -59,7 +59,7 @@
                     
                     </div> -->
 
-                    <select name="category" style="width: 289.50px; height: 37.02px; left: 0px; top: 19.65px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
+                    <select id="category" style="width: 289.50px; height: 37.02px; left: 0px; top: 19.65px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
                         
                         <option value="nil">-- Select an option --</option>
                         <option value="Customer">Customer</option>
@@ -149,7 +149,7 @@
         </div>
     </div>
 </form>
-<script>
+<!-- <script>
     // Get the button element by its ID
     const btn = document.getElementById('btn');
 
@@ -157,6 +157,25 @@
     btn.addEventListener('click', function() {
         // Redirect to the 'login.html' page when the button is clicked
         window.location.assign('login.html');
+    });
+</script> -->
+
+<script>
+    // Get the button and select element by their IDs
+    const btn = document.getElementById('btn');
+    const categorySelect = document.getElementById('category');
+
+    // Add a click event listener to the button
+    btn.addEventListener('click', function() {
+        const selectedOption = categorySelect.value;
+        if (selectedOption === 'Customer') {
+            window.location.href = 'customer.html';
+        } else if (selectedOption === 'Business') {
+            window.location.href = 'business.html';
+        } else {
+            // Handle other cases or show an error message
+            alert('Please select a category.');
+        }
     });
 </script>
 
