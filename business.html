@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business</title>
+    <link rel="stylesheet" href="style_login.css">
+</head>
+<body>
+    <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: radial-gradient(103.88% 58.43% at 56.74% 50%, #0085FF 0%, #003465 100%);display: flex;justify-content: space-evenly;align-items: center;flex-direction: column;flex-wrap: wrap;">
+
+        <div style="display: flex;width: 1200px; height: 144px; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px); justify-content: center; align-items: center;">
+        
+            <div id="Customer" style="color: white; font-size: 80px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+                Business
+            </div>
+
+        </div>
+
+        <div style="width: 814px; height: 510.81px; position: relative">
+
+            <div style="width: 814px; height: 510.81px; left: 0px; top: 0px; position: absolute; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px)"></div>
+
+        </div>
+
+        <button style="width: 10%; height: 10%;position: relative; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px);right: 100px;top: 75px;" id="cart">
+            <div style="width: 100%; height: 100%;position: relative">
+        
+                <img src="trolley-cart.png" alt="cart button" style=" height: 80%;position: relative; justify-content: center; align-items: center;top: 5px;">
+        
+            </div>
+        </button>
+
+    </div>
+    <script>
+        // Get the button element by its ID
+        const btn = document.getElementById('cart');
+    
+        // Add a click event listener to the button
+        btn.addEventListener('click', function() {
+            // Redirect to the 'login.html' page when the button is clicked
+            window.location.assign('cart.html');
+        });
+    </script>
+</body>
+
+</html>
