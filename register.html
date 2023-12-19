@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
-<form>
+<form action="/" method="POST" class="container"> 
     <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: radial-gradient(103.88% 58.43% at 56.74% 50%, #0085FF 0%, #003465 100%);display: flex;justify-content: center;align-items: center;">
 
         <div style="width: 399.51px; height: 510.81px; position: relative">
@@ -39,11 +39,13 @@
 
                 <div style="width: 90px; height: 18px; left: 108px; top: 9px; position: absolute; color: #FF90C2; font-size: 20px; font-family: Poppins; font-weight: 700; word-wrap: break-word">Sign-up</div> -->
             
-                <button type="button" id="btn" style="width: 289.50px; height: 37.02px; left: 0px; top: 0px; position: absolute; background: #003465; border-radius: 10px">
+                <button type="submit" id="btn" name="" style="width: 289.50px; height: 37.02px; left: 0px; top: 0px; position: absolute; background: #003465; border-radius: 10px">
                     <div style="width: 90px; height: 18px; left: 100px; top: 2px; position: absolute; color: #FF90C2; font-size: 20px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
                         Sign up
                     </div>
                 </button>
+
+                <a href="login.html" style="width: 90px; height: 18px; left: 120px; top: 40px; position: absolute; color: #FF90C2; font-size: 20px; font-family: Poppins; font-weight: 700; word-wrap: break-word">Login</a>
             
 
 
@@ -59,7 +61,7 @@
                     
                     </div> -->
 
-                    <select id="category" style="width: 289.50px; height: 37.02px; left: 0px; top: 19.65px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
+                    <select id="category" name="category" style="width: 289.50px; height: 37.02px; left: 0px; top: 19.65px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
                         
                         <option value="nil">-- Select an option --</option>
                         <option value="Customer">Customer</option>
@@ -160,7 +162,7 @@
     });
 </script> -->
 
-<script>
+<!-- <script>
     // Get the button and select element by their IDs
     const btn = document.getElementById('btn');
     const categorySelect = document.getElementById('category');
@@ -177,7 +179,7 @@
             alert('Please select a category.');
         }
     });
-</script>
+</script> -->
 
 </body>
 </html>
