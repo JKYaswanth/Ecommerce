@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="style_login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form action="/" method="POST" class="container"> 
+        <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: radial-gradient(103.88% 58.43% at 56.74% 50%, #0085FF 0%, #003465 100%);display: flex;justify-content: center;align-items: center;">
+    
+            <div style="width: 399.51px; height: 510.81px; position: relative">
+    
+                <div style="width: 399.51px; height: 610.81px; left: 0px; top: 0px; position: absolute; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px)">
+                
+                </div>
+    
+                <div style="width: 127px; height: 21px; left: 56px; top: 30px; position: absolute; color: white; font-size: 24px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+                    
+                    Your logo
+                
+                </div>
+    
+                <div style="width: 197px; height: 34px; left: 56px; top: 78px; position: absolute; color: white; font-size: 26px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+                    
+                    Product Details
+                
+                </div>
+    
+    
+                
+    
+                <div style="width: 289.50px; height: 283.67px; left: 55px; top: 128px; position: absolute">
+    
+                    <div style="width: 289.50px; height: 56.67px; left: 0px; top: 227px; position: absolute">
+    
+                        
+    
+                        <select id="type" name="type" style="width: 289.50px; height: 37.02px; left: 0px; top: 19.65px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
+                            
+                            <option value="nil">-- Select an option --</option>
+                            <option value="add_product">Add Product</option>
+    
+                            <option value="delete_product">Delete Product</option>
+
+                            <option value="update_product">Update Product</option>
+
+                            <option value="remove_product">Remove Product</option>
+    
+                        </select>
+    
+                        <div style="width: 112px; height: 16px; left: 0.42px; bottom: 50px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+                            
+                            Type
+                        
+                        </div>
+    
+                        
+                    </div>
+    
+                    <div style="width: 100px; height: 15px; left: 0.42px; top: 71px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+                        
+                        Category
+                    
+                    </div>
+    
+                   
+    
+                    <input type="number" name="price" 
+                    placeholder="Price in Rupees"
+                    style="width: 289.50px; height: 37.02px; left: 0px; top: 172px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid" min="0">
+    
+                    <div style="width: 112px; height: 16px; left: 0.42px; top: 149px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+                        
+                        Price
+                    
+                    </div>
+                    
+                    <div style="width: 289.50px; height: 58.02px; left: 0px; top: 0px; position: absolute">
+
+                        <label for="Prod_name" style="width: 150px; height: 15px; left: 0px; top: 0px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Product Name <br></label>
+    
+                        <input type="text" placeholder="Prod_name" name="Prod_name" style="width: 289.50px; height: 37.02px; left: 0px; top: 25px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
+    
+                    </div>
+
+                    <div style="width: 289.50px; height: 37.02px; left: 0px; top: 90.18px; position: absolute">
+                        
+                        <select name="category" id="category" style="width: 289.50px; height: 37.02px; left: 0px; top: 5px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid" >
+                        
+                            <option value="nil">--Select an Option</option>
+
+                            <option value="SmartPhone">SmartPhone</option>
+                            <option value="Computer">Computer</option>
+                            <option value="Accesorries">Accesorries</option>
+                            <option value="Men_Cloth">Men's Clothing</option>
+                            <option value="Women_cloth">Women's Clothing</option>
+
+                        </select>
+    
+                    </div>
+
+                    <div style="width: 280.50px; height: 37.02px; left: 0px; top: 320px; position: absolute">
+                        <label for="enumeration" style="width: 150px; height: 15px; left: 0px; bottom: 50px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Enumeration</label>
+                        <input type="number" placeholder="Quantity" name="enumeration" id="enumeration" style="width: 100%; height: 70%; border-radius: 10px; border: 1px #BCBEC0 solid; padding: 5px;" min="0">
+
+                        <!-- <input type="number" name="enumeration" id="enumeration" style="width: 100%; height: 70%; border-radius: 10px; border: 1px #BCBEC0 solid; padding: 5px; box-sizing: border-box;" min="0"> -->
+                      </div>
+                </div>
+                <div style="width: 289.50px; height: 37.02px; left: 55px; top: 525px; position: absolute">
+    
+                    
+                
+                    <button type="submit" id="btn" name="" style="width: 289.50px; height: 37.02px; left: 0px; top: 0px; position: absolute; background: #003465; border-radius: 10px">
+                        <div style="width: 90px; height: 18px; left: 100px; top: 2px; position: absolute; color: #FF90C2; font-size: 20px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+                            Update
+                        </div>
+                    </button>
+    
+                    <a href="business.html" style="width: 90px; height: 18px; left: 120px; top: 40px; position: absolute; color: #FF90C2; font-size: 20px; font-family: Poppins; font-weight: 700; word-wrap: break-word">Return</a>
+                
+    
+    
+                </div>
+
+            </div>
+
+            
+        </div>
+    </form>
+    <!-- <script>
+        // Get the button element by its ID
+        const btn = document.getElementById('btn');
+    
+        // Add a click event listener to the button
+        btn.addEventListener('click', function() {
+            // Redirect to the 'login.html' page when the button is clicked
+            window.location.assign('login.html');
+        });
+    </script> -->
+    
+    <!-- <script>
+        // Get the button and select element by their IDs
+        const btn = document.getElementById('btn');
+        const categorySelect = document.getElementById('category');
+    
+        // Add a click event listener to the button
+        btn.addEventListener('click', function() {
+            const selectedOption = categorySelect.value;
+            if (selectedOption === 'Customer') {
+                window.location.href = 'customer.html';
+            } else if (selectedOption === 'Business') {
+                window.location.href = 'business.html';
+            } else {
+                // Handle other cases or show an error message
+                alert('Please select a category.');
+            }
+        });
+    </script> -->
+</body>
+</html>

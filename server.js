@@ -63,7 +63,11 @@ const Payment = mongoose.model('Payment', PaymentSchema);
 // Product Collection Schema
 const ProductSchema = new Schema({
     Product_id: { type: String, required: true, unique: true },
-    Seller_name: { type: String, required: true }
+    Seller_name: { type: String, required: true },
+    Price: { type: Number, required: true },
+    Category: {type: String, required: true},
+    Enum: {type: Number}
+
 });
 ProductSchema.index({ Seller_name: 1 });
 const Product = mongoose.model('Product', ProductSchema);
@@ -79,156 +83,8 @@ const CartItem = mongoose.model('CartItem', CartItemSchema);
 
 module.exports = { Cart, Customer, Seller, SellerPhone, Payment, Product, CartItem };
 
-
-
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.get("/", function(req,res){
-//     res.sendFile(__dirname+"/register.html");
-// })
-
-// app.get("/customer.html", function(req, res) {
-//     res.sendFile(__dirname + "/customer.html");
-// });
-
-// app.get("/business.html", function(req, res) {
-//     res.sendFile(__dirname + "/business.html");
-// });
-
-// // Route to serve login.html
-// app.get("/login.html", function(req, res) {
-//     res.sendFile(__dirname + "/login.html");
-// });
-
-// app.get("/register.html", function(req, res) {
-//     res.sendFile(__dirname + "/register.html");
-// });
-
-// // app.get("/", function (req, res) {
-// //     res.sendFile(__dirname + "/login.html");
-// // });
-
-// // app.post("/login.html", async function (req, res) {
-// //     const { email, password } = req.body;
-
-// //     try {
-// //         // Check if the email exists in the Customer collection
-// //         const customer = await Customer.findOne({ Email: email });
-// //         if (customer) {
-// //             // If the email exists, check if the password matches
-// //             if (customer.Password === password) {
-// //                 // Password matched, perform the necessary actions (redirect or send a success message)
-// //                 res.send("Login successful as a Customer");
-// //             } else {
-// //                 // Password mismatch
-// //                 throw new Error("Incorrect password for Customer");
-// //             }
-// //         } else {
-// //             // If the email doesn't exist in the Customer collection, check in the Seller collection
-// //             const seller = await Seller.findOne({ Seller_Email: email });
-// //             if (seller) {
-// //                 // If the email exists, check if the password matches
-// //                 if (seller.Password === password) {
-// //                     // Password matched, perform the necessary actions (redirect or send a success message)
-// //                     res.send("Login successful as a Seller");
-// //                 } else {
-// //                     // Password mismatch
-// //                     throw new Error("Incorrect password for Seller");
-// //                 }
-// //             } else {
-// //                 // If the email doesn't exist in the Seller collection as well
-// //                 throw new Error("Email not found in both Customer and Seller collections");
-// //             }
-// //         }
-// //     } catch (error) {
-// //         res.status(401).send(error.message); // Send a 401 Unauthorized status and the error message
-// //     }
-// // });
-
-// app.get("/register.html", function(req, res) {
-//     res.sendFile(__dirname + "/register.html");
-// });
-
-// // Route for handling login
-// app.post("/login.html", async function (req, res) {
-//     const { email, password } = req.body;
-
-//     try {
-//         // Check if the email exists in the Customer collection
-//         const customer = await Customer.findOne({ Email: email });
-//         if (customer) {
-//             // If the email exists, check if the password matches
-//             if (customer.Password === password) {
-//                 // Password matched, perform the necessary actions (redirect or send a success message)
-//                 res.send("Login successful as a Customer");
-//             } else {
-//                 // Password mismatch
-//                 throw new Error("Incorrect password for Customer");
-//             }
-//         } else {
-//             // If the email doesn't exist in the Customer collection, check in the Seller collection
-//             const seller = await Seller.findOne({ Seller_Email: email });
-//             if (seller) {
-//                 // If the email exists, check if the password matches
-//                 if (seller.Password === password) {
-//                     // Password matched, perform the necessary actions (redirect or send a success message)
-//                     res.send("Login successful as a Seller");
-//                 } else {
-//                     // Password mismatch
-//                     throw new Error("Incorrect password for Seller");
-//                 }
-//             } else {
-//                 // If the email doesn't exist in the Seller collection as well
-//                 throw new Error("Email not found in both Customer and Seller collections");
-//             }
-//         }
-//     } catch (error) {
-//         res.status(401).send(error.message); // Send a 401 Unauthorized status and the error message
-//     }
-// });
-
-// app.post("/", function(req,res){
-
-//     const { username, email, password, category } = req.body;
-//     if (category === 'Customer'){
-//         let newCustomer = new Customer({
-//             Username: username,
-//             Email: email,
-//             Password: password,
-//             Cart_id: username
-//         })
-//         newCustomer.save()
-//         .then(() => {
-//             res.redirect("/customer.html"); // Redirect after saving customer data
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             // res.redirect("/register.html");
-//             res.status(500).send("Error saving customer data");
-            
-//         });
-//     }
-//     else if (category === 'Business'){
-//         let newSeller = new Seller({
-//             Seller_name: username,
-//             Seller_Email: email,
-//             Password: password
-//         })
-//         newSeller.save()
-//         .then(() => {
-//             res.redirect("/business.html"); // Redirect after saving business data
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             // res.redirect("/register.html");
-//             res.status(500).send("Error saving business data");
-            
-//         });
-//     }else {
-//         res.send("Invalid category");
-//     }
-
-// })
 
 
 app.get("/", function(req, res) {
@@ -251,51 +107,9 @@ app.get("/register.html", function(req, res) {
     res.sendFile(__dirname + "/register.html");
 });
 
-// app.post("/login.html", async function(req, res) {
-//     const { email, password } = req.body;
-
-//     try {
-//         const customer = await Customer.findOne({ Email: email });
-//         const seller = await Seller.findOne({ Seller_Email: email });
-
-//         if (customer && seller) {
-//             if (customer.Password === password && seller.Password === password) {
-//                 // Passwords match for both customer and seller
-//                 res.status(401).send("Ambiguous account: Same email exists as both Customer and Seller");
-//             } else if (customer.Password === password) {
-//                 // Password matches for Customer
-//                 res.send("Login successful as a Customer");
-//             } else if (seller.Password === password) {
-//                 // Password matches for Seller
-//                 res.send("Login successful as a Seller");
-//             } else {
-//                 // Passwords don't match for both collections
-//                 res.status(401).send("Incorrect password for both Customer and Seller");
-//             }
-//         } else if (customer) {
-//             // Email found only in Customer collection
-//             if (customer.Password === password) {
-//                 // res.send("Login successful as a Customer");
-//                 res.redirect("/customer.html");
-//             } else {
-//                 throw new Error("Incorrect password for Customer");
-//             }
-//         } else if (seller) {
-//             // Email found only in Seller collection
-//             if (seller.Password === password) {
-//                 // res.send("Login successful as a Seller");
-//                 res.redirect("/business.html");
-//             } else {
-//                 throw new Error("Incorrect password for Seller");
-//             }
-//         } else {
-//             // Email not found in both collections
-//             throw new Error("Email not found in both Customer and Seller collections");
-//         }
-//     } catch (error) {
-//         res.status(401).send(error.message);
-//     }
-// });
+app.get("/trolley-cart.png", function(req, res) {
+    res.sendFile(__dirname + "/trolley-cart.png");
+});
 
 app.post("/login.html", async function(req, res) {
     const { email, password } = req.body;
