@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bodyParser = require("body-parser");
 
+
+
 const app = express();
 
 mongoose.connect("mongodb://localhost:27017/Ecommerce")
@@ -16,14 +18,18 @@ mongoose.connect("mongodb://localhost:27017/Ecommerce")
 
 // Cart Collection Schema
 const CartSchema = new Schema({
-    Cart_id: { type: String, required: true, unique: true }
+    Email: { type: String, required: true,},
+    Product_name: { type: String, required: true,},
+    Seller_Email: { type: String, required: true },
+    Enum: {type: Number}
+
 });
 const Cart = mongoose.model('Cart', CartSchema);
 
 // Customer Collection Schema
 const CustomerSchema = new Schema({
     Username: { type: String, required: true, unique: true },
-    Cart_id: { type: String, required: true },
+    // Cart_id: { type: String, required: true },
     Email: { type: String, required: true },
     Password: { type: String, required: true }
 });
@@ -62,14 +68,14 @@ const Payment = mongoose.model('Payment', PaymentSchema);
 
 // Product Collection Schema
 const ProductSchema = new Schema({
-    Product_id: { type: String, required: true, unique: true },
-    Seller_name: { type: String, required: true },
+    Product_name: { type: String, required: true, unique: true },
+    Seller_Email: { type: String, required: true },
     Price: { type: Number, required: true },
     Category: {type: String, required: true},
     Enum: {type: Number}
 
 });
-ProductSchema.index({ Seller_name: 1 });
+ProductSchema.index({ Seller_Email: 1 });
 const Product = mongoose.model('Product', ProductSchema);
 
 // Cart_item Collection Schema
@@ -111,6 +117,66 @@ app.get("/trolley-cart.png", function(req, res) {
     res.sendFile(__dirname + "/trolley-cart.png");
 });
 
+app.get("/add_icon.png", function(req, res) {
+    res.sendFile(__dirname + "/add_icon.png");
+});
+
+app.get("/cart.html", function(req, res) {
+    res.sendFile(__dirname + "/cart.html");
+});
+
+app.get("/modify_cart.html", function(req, res) {
+    res.sendFile(__dirname + "/modify_cart.html");
+});
+
+
+app.get("/add_prod.html", function(req, res) {
+    const sellerEmail = req.query.seller_email;
+    res.sendFile(__dirname + "/add_prod.html"); // Corrected path
+});
+
+app.get('/prod', async (req, res) => {
+    try {
+        const products = await Product.find({}).lean(); // Retrieve all products
+        res.json(products); // Send products as JSON response
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch products' });
+    }
+});
+
+app.get('/products', async (req, res) => {
+    try {
+        const sellerEmail = req.query.seller_email;
+        const products = await Product.find({ Seller_Email: sellerEmail });
+
+        if (products.length > 0) {
+            res.json(products);
+        } else {
+            res.status(404).json({ error: 'No products found for this seller' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch products', message: error.message });
+    }
+});
+
+
+// app.get('/business.html/?seller_email', async (req, res) => {
+//     try {
+//         const sellerEmail = req.params.seller_email;
+//         const products = await Product.find({ Seller_Email: sellerEmail });
+
+//         if (products.length > 0) {
+//             res.json(products);
+//         } else {
+//             res.status(404).json({ error: 'No products found for this seller' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: 'Failed to fetch products', message: error.message });
+//     }
+// });
+
+
+
 app.post("/login.html", async function(req, res) {
     const { email, password } = req.body;
 
@@ -124,10 +190,12 @@ app.post("/login.html", async function(req, res) {
                 res.status(401).send("Ambiguous account: Same email exists as both Customer and Seller");
             } else if (customer.Password === password) {
                 // Password matches for Customer
-                res.redirect("/customer.html");
+                res.redirect(`/customer.html?email=${customer.Email}`);
             } else if (seller.Password === password) {
                 // Password matches for Seller
-                res.redirect("/business.html");
+                // res.redirect("/business.html");
+                res.redirect(`/business.html?seller_email=${seller.Seller_Email}`);
+
             } else {
                 // Passwords don't match for both collections
                 res.status(401).send("Incorrect password for both Customer and Seller");
@@ -135,14 +203,15 @@ app.post("/login.html", async function(req, res) {
         } else if (customer) {
             // Email found only in Customer collection
             if (customer.Password === password) {
-                res.redirect("/customer.html");
+                // res.redirect("/customer.html");
+                res.redirect(`/customer.html?email=${customer.Email}`);
             } else {
                 throw new Error("Incorrect password for Customer");
             }
         } else if (seller) {
             // Email found only in Seller collection
             if (seller.Password === password) {
-                res.redirect("/business.html");
+                res.redirect(`/business.html?seller_email=${seller.Seller_Email}`);
             } else {
                 throw new Error("Incorrect password for Seller");
             }
@@ -152,6 +221,121 @@ app.post("/login.html", async function(req, res) {
         }
     } catch (error) {
         res.status(401).send(error.message);
+    }
+});
+
+// app.post("/add_prod.html", async (req, res) => {
+//     try {
+//         const { type, Prod_name,seller_email,price, category, enumeration } = req.body;
+
+//         if (type === 'add_product') {
+//             // let Email1 = req.query.seller_email;
+//             // Logic for adding a new product
+//             const newProduct = new Product({
+//                 Product_name: Prod_name,
+//                 Seller_Email: seller_email,
+//                 Price: price,
+//                 Category: category,
+//                 Enum: enumeration
+//             });
+//             await newProduct.save();
+//             res.status(201).json({ message: 'Product added successfully' });
+//         } else if (type === 'update_product') {
+//             // Logic for updating a product
+//             // Implement update product logic here
+//             res.status(200).json({ message: 'Product updated successfully' });
+//         } else if (type === 'remove_product') {
+//             // Logic for removing a product
+//             // Implement remove product logic here
+//             res.status(200).json({ message: 'Product removed successfully' });
+//         } else {
+//             // Handle cases for other types or show an error message
+//             res.status(400).json({ error: 'Invalid type selected' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: 'Failed to process request', message: error.message });
+//     }
+// });
+
+// app.post("/add_prod.html", async (req, res) => {
+//     try {
+//         const { type, Prod_name, seller_email, price, category, enumeration } = req.body;
+
+//         if (type === 'add_product') {
+//             // Logic for adding a new product
+//             const newProduct = new Product({
+//                 Product_name: Prod_name,
+//                 Seller_Email: seller_email,
+//                 Price: price,
+//                 Category: category,
+//                 Enum: enumeration
+//             });
+//             await newProduct.save();
+//             res.status(201).json({ message: 'Product added successfully' });
+//         } else if (type === 'update_product') {
+//             const { category, price, enumeration } = req.body;
+//             // Logic for updating a product
+//             await Product.findOneAndUpdate(
+//                 { Product_name: Prod_name },
+//                 { $set: { Category: category, Price: price, Enum: enumeration } },
+//                 { new: true }
+//             );
+//             res.status(200).json({ message: 'Product updated successfully' });
+//         } else if (type === 'remove_product') {
+//             // Logic for removing a product
+//             await Product.deleteOne({ Product_name: Prod_name });
+//             res.status(200).json({ message: 'Product removed successfully' });
+//         } else {
+//             // Handle cases for other types or show an error message
+//             res.status(400).json({ error: 'Invalid type selected' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: 'Failed to process request', message: error.message });
+//     }
+// });
+
+app.post("/add_prod.html", async (req, res) => {
+    try {
+        const { type, Prod_name, seller_email, price, category, enumeration } = req.body;
+
+        if (type === 'add_product') {
+            // Logic for adding a new product
+            const newProduct = new Product({
+                Product_name: Prod_name,
+                Seller_Email: seller_email,
+                Price: price,
+                Category: category,
+                Enum: enumeration
+            });
+            await newProduct.save();
+            res.status(201).json({ message: 'Product added successfully' });
+        } else if (type === 'update_product') {
+            const { category, price, enumeration } = req.body;
+            // Logic for updating a product
+            const updatedProduct = await Product.findOneAndUpdate(
+                { Product_name: Prod_name },
+                { $set: { Category: category, Price: price, Enum: enumeration } },
+                { new: true }
+            );
+            if (updatedProduct) {
+                res.status(200).json({ message: 'Product updated successfully' });
+            } else {
+                res.status(404).json({ error: 'Product not found' });
+            }
+        } else if (type === 'remove_product') {
+            // Logic for removing a product
+            const deletedProduct = await Product.deleteOne({ Product_name: Prod_name });
+            if (deletedProduct.deletedCount > 0) {
+                res.status(200).json({ message: 'Product removed successfully' });
+            } else {
+                res.status(404).json({ error: 'Product not found' });
+            }
+        } else {
+            // Handle cases for other types or show an error message
+            res.status(400).json({ error: 'Invalid type selected' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to process request', message: error.message });
     }
 });
 
@@ -170,7 +354,7 @@ app.post("/", function(req, res) {
 
         newCustomer.save()
             .then(() => {
-                res.redirect("/customer.html");
+                res.redirect(`/customer.html?email=${customer.Email}`);
             })
             .catch(err => {
                 console.error(err);
@@ -185,7 +369,9 @@ app.post("/", function(req, res) {
 
         newSeller.save()
             .then(() => {
-                res.redirect("/business.html");
+                // res.redirect("/business.html");
+                res.redirect(`/business.html?seller_name=${newSeller.Seller_name}`);
+
             })
             .catch(err => {
                 console.error(err);
@@ -195,7 +381,6 @@ app.post("/", function(req, res) {
         res.send("Invalid category");
     }
 });
-
 
 
 // app.listen(3000, function(){

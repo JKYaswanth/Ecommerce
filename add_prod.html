@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
-    <form action="/" method="POST" class="container"> 
+    <form method="POST" class="container" action="/add_prod.html" id="productForm"> 
         <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: radial-gradient(103.88% 58.43% at 56.74% 50%, #0085FF 0%, #003465 100%);display: flex;justify-content: center;align-items: center;">
     
             <div style="width: 399.51px; height: 510.81px; position: relative">
@@ -44,8 +44,6 @@
                             
                             <option value="nil">-- Select an option --</option>
                             <option value="add_product">Add Product</option>
-    
-                            <option value="delete_product">Delete Product</option>
 
                             <option value="update_product">Update Product</option>
 
@@ -84,7 +82,7 @@
 
                         <label for="Prod_name" style="width: 150px; height: 15px; left: 0px; top: 0px; position: absolute; color: white; font-size: 18px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Product Name <br></label>
     
-                        <input type="text" placeholder="Prod_name" name="Prod_name" style="width: 289.50px; height: 37.02px; left: 0px; top: 25px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
+                        <input type="text" id="Prod_name" name="Prod_name" style="width: 289.50px; height: 37.02px; left: 0px; top: 25px; position: absolute; background: white; border-radius: 10px; border: 1px #BCBEC0 solid">
     
                     </div>
 
@@ -126,6 +124,9 @@
     
     
                 </div>
+                <div>
+                    <input type="hidden" name="seller_email" id="sellerEmailInput">
+                </div>
 
             </div>
 
@@ -161,5 +162,63 @@
             }
         });
     </script> -->
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sellerEmail = urlParams.get('seller_email');
+
+            // Assign seller_email value to the hidden input field
+            const sellerEmailInput = document.getElementById('sellerEmailInput');
+            if (sellerEmail) {
+                sellerEmailInput.value = sellerEmail;
+            }
+        });
+
+        // Submit form with seller_email value
+        const productForm = document.getElementById('productForm');
+        productForm.addEventListener('submit', (event) => {
+            // Extract seller_email from the URL again in case it has changed
+            const urlParams = new URLSearchParams(window.location.search);
+            const sellerEmail = urlParams.get('seller_email');
+
+            // Update the hidden input field value before submission
+            const sellerEmailInput = document.getElementById('sellerEmailInput');
+            if (sellerEmail) {
+                sellerEmailInput.value = sellerEmail;
+            }
+        });
+    </script>
+
+    <script>
+        // Example handling success and error messages via JavaScript popups
+fetch('/add_prod.html', {
+    method: 'POST',
+    body: JSON.stringify(/* Provide request data here */),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Network response was not ok.');
+    }
+})
+.then(data => {
+    // Check the response data and display appropriate messages using JavaScript popups
+    if (200) {
+        alert("Product Removed Successfully"); // Show success message in a popup
+    } else {
+        alert('Something went wrong.'); // Show a generic success message if data.message is not available
+    }
+})
+.catch(error => {
+    alert('An error occurred: ' + error.message); // Show error message in a popup
+});
+
+    </script>
+
 </body>
 </html>

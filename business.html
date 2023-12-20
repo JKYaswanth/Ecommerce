@@ -17,9 +17,24 @@
 
         </div>
 
-        <div style="width: 814px; height: 510.81px; position: relative">
+        <div style="width: 814px; height: 510.81px; position: relative;align-content: center;">
 
-            <div style="width: 814px; height: 510.81px; left: 0px; top: 0px; position: absolute; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px)"></div>
+            <!-- <div style="width: 814px; height: 510.81px; left: 0px; top: 0px; position: absolute; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px)"></div> -->
+
+            <table id="productTable" border="1" style="color: white; font-size: 30px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>In-Stock</th>
+                    <th>Price</th>
+                    <!-- Add more table headers as needed -->
+                  </tr>
+                </thead>
+                <tbody id="productTableBody">
+                  <!-- Table body will be populated dynamically -->
+                </tbody>
+              </table>
 
         </div>
     </div>
@@ -27,7 +42,7 @@
     <button style="width: 5%; height: 10%;position: relative; background: rgba(87.82, 130.04, 193.37, 0.28); border-radius: 40px; border: 3px #5882C1 solid; backdrop-filter: blur(25px);left: 200px;top: 350px;" id="add_prod" name="add_prod">
         <div style="width: 100%; height: 100%;">
     
-            <img src="add_icon.png" alt="cart button" style="height: 80%; position: relative; justify-content: center; align-items: center; top: 5px;">
+            <img src="/add_icon.png" alt="cart button" style="height: 80%; position: relative; justify-content: center; align-items: center; top: 5px;">
 
         </div>
     </button>
@@ -42,6 +57,78 @@
             window.location.assign('add_prod.html');
         });
     </script>
+    <!-- <script>
+        // Get the seller_name from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const seller_email = urlParams.get('email');
+    
+        // Now, you can use 'sellerName' variable in your JavaScript logic or display it in the HTML
+        console.log("Seller Email:", seller_email);
+      </script> -->
+
+      <script>
+        // Get the button element by its ID
+        const btn1 = document.getElementById('add_prod');
+    
+        // Add a click event listener to the button
+        btn.addEventListener('click', function() {
+            // Redirect to 'add_prod.html' with 'seller_email' parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const sellerEmail = urlParams.get('seller_email');
+            window.location.href = `/add_prod.html?seller_email=${sellerEmail}`;
+        });
+    </script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', async () => {
+        const sellerEmail = window.location.search.split('=')[1]; // Extract seller_email from URL query parameters
+        const productsTable = document.getElementById('productTableBody');
+
+        try {
+            const response = await fetch(`/products?seller_email=${sellerEmail}`);
+            const products = await response.json();
+
+            products.forEach(product => {
+                const row = productsTable.insertRow();
+                row.insertCell(0).textContent = product.Product_name;
+                row.insertCell(1).textContent = product.Category;
+                row.insertCell(2).textContent = product.Enum;
+                row.insertCell(3).textContent = product.Price;
+                // Add cells for other product properties as needed
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+
+    // <script>
+    // window.addEventListener('DOMContentLoaded', async () => {
+    //     const sellerEmail = window.location.search.split('=')[1]; // Extract seller_email from URL query parameters
+    //     const productsTable = document.getElementById('productTableBody');
+
+    //     try {
+    //         const response = await fetch(`/products?seller_email=${sellerEmail}`);
+    //         const products = await response.json();
+
+    //         products.forEach(product => {
+    //             const row = productsTable.insertRow();
+    //             row.insertCell(0).textContent = product.Product_name;
+    //             row.insertCell(1).textContent = product.Category;
+    //             row.insertCell(2).textContent = product.Enum;
+    //             row.insertCell(3).textContent = product.Price;
+    //             // Add cells for other product properties as needed
+    //         });
+    //     } catch (error) {
+    //         console.error('Error fetching products:', error);
+    //     }
+    // });
+</script>
+
+</script>
+
+
+  
+
 </body>
 
 </html>
